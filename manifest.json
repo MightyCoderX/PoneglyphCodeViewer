@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "JSON Highlighter",
+    "version": "1.0.0",
+    "description": "Fixes aternos by removing ads etc...",
+    "icons": {
+        "128": "icons/json.svg"
+    },
+
+    "content_scripts": 
+    [
+        {
+            "matches": ["*://*/*"],
+            "js": [ "highlighter.js" ]
+        }
+    ],
+
+    "web_accessible_resources": ["lib/*", "editor/*"],
+
+    "permissions": ["*://*/*", "<all_urls>"]
+}

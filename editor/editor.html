@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editor</title>
+
+        <style>
+            *,
+            *::before,
+            *::after
+            {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+        </style>
+
+        <script src="../lib/monaco-editor/min/vs/loader.js" defer></script>
+        <script src="../lib/requirejs/require.js" defer></script>
+        <script src="editor.js" defer></script>
+    </head>
+    <body>
+        <div class="container" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0;"></div>
+    </body>
+</html>
