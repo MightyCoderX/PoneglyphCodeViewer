@@ -18,7 +18,8 @@ window.addEventListener('message', e =>
             readOnly: true,
             cursorBlinking: 'smooth',
             dragAndDrop: true,
-            mouseWheelZoom: true
+            mouseWheelZoom: true,
+            wordWrap: true
         });
     });
 
