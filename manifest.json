@@ -1,5 +1,5 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "JSON Highlighter",
     "version": "1.0.0",
     "description": "JSON Code Highlighter using monaco-editor",
@@ -7,7 +7,7 @@
         "128": "icons/json.svg"
     },
 
-    "content_scripts": 
+    "content_scripts":
     [
         {
             "matches": ["*://*/*"],
@@ -15,7 +15,12 @@
         }
     ],
 
-    "web_accessible_resources": ["lib/*", "editor/*"],
+    "web_accessible_resources": [
+		{
+            "resources": ["lib/*", "editor/*"],
+            "matches": ["*://*/*"]
+        }
+	],
 
-    "permissions": ["*://*/*", "<all_urls>"]
+    "host_permissions": ["<all_urls>"]
 }
