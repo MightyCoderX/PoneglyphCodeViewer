@@ -78,7 +78,7 @@ function exposeJson(text)
 {
     // Prints the json to console for now, until I find a way to expose it in window.json
     window.json = JSON.parse(text);
-    console.log(json);
+    console.dir(json);
 
     // Doesn't work because it violates the following Content Security Policy directive: "script-src 'self' 'wasm-unsafe-eval'".
     // function main()

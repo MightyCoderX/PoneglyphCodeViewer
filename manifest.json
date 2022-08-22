@@ -4,7 +4,10 @@
     "version": "1.0.0",
     "description": "JSON Code Highlighter using monaco-editor",
     "icons": {
-        "128": "icons/json.svg"
+        "16": "icons/json-16.png",
+        "32": "icons/json-32.png",
+        "48": "icons/json-48.png",
+        "128": "icons/json-128.png"
     },
 
     "content_scripts":
