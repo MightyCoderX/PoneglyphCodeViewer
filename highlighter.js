@@ -15,8 +15,28 @@ if(preElem && isValidJSON(preElem.innerHTML))
 
     try
     {
+        console.log(`%c{%c "JSON Highlighter" %c}%c
+JSON is shown below!
+%c
+🖱️ right click the json
+📄 copy object
+⌨️ type %cconst json =%c <PASTE_JSON_HERE>
+🪠 paste the json
+🎉 have fun messing with it!
+%c`
+            , 
+            'line-height: 1.5rem; color: #9cdcfe; margin: 0 auto; display: inline-block;', 
+            'line-height: 1.5rem; color: #ce9178;', 
+            'line-height: 1.5rem; color: #9cdcfe;', 
+            'line-height: 1.5rem; color: initial;', 
+            'line-height: 1.5rem; display: inline-block;',
+            'line-height: 1.5rem; background: #333; padding: 0 0.8em; border-radius: 0.5em; vertical-align: middle;', 
+            'line-height: 1.5rem; background: initial; padding: initial;',
+            'line-height: initial; display: initial;'
+        );
+
         exposeJson(text, false);
-        console.log(`%c[%cJSONHighlighter%c]%c JSON stored in window.json, enjoy!`, 'color: #9cdcfe;', 'color: #ce9178;', 'color: #9cdcfe;', 'color: initial;');
+        // console.log(`%c[%cJSONHighlighter%c]%c JSON stored in window.json, enjoy!`, 'color: #9cdcfe;', 'color: #ce9178;', 'color: #9cdcfe;', 'color: initial;');
     }
     catch(err)
     {
