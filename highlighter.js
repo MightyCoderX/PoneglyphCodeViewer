@@ -1,63 +1,93 @@
-const preElem = document.querySelector('body > pre');
+if(
+    (
+        document.contentType.startsWith('text/') || 
+        document.contentType.startsWith('application/')
+    ) &&
+    document.contentType !== 'text/html'
+) loadEditor();
 
-if(preElem && isValidJSON(preElem.innerHTML))
+function loadEditor()
 {
-    document.body.style.padding = 0;
-    document.body.style.margin = 0;
-    document.body.style.boxSizing = 'border-box';
-    document.body.style.width = '100vw';
-    document.body.style.minHeight = '100vh';
-    document.body.style.backgroundColor = '#1e1e1e';
+    document.body.style.cssText = `
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        width: 100vw;
+        min-height: 100vh;
+        background-color: #1e1e1e;
+    `;
+
+    const iframe = document.createElementNS('http://www.w3.org/1999/xhtml', 'iframe');
+    iframe.setAttributeNS(null, 'src', chrome.runtime.getURL('/editor/editor.html'));
+    iframe.setAttributeNS(null, 'style', 'border: none; width: 100%; height: 100vh; display: block;');
+    document.body.append(iframe);
     
-    const text = preElem.innerHTML;
-
-    preElem.remove();
-
-    try
+    
+    if(document.contentType === 'application/json')
     {
-        console.log(`%c{%c "JSON Highlighter" %c}%c
-JSON is shown below!
-%c
-🖱️ right click the json
-📄 copy object
-⌨️ type %cconst json =%c <PASTE_JSON_HERE>
-🪠 paste the json
-🎉 have fun messing with it!
-%c`
-            , 
-            'line-height: 1.5rem; color: #9cdcfe; margin: 0 auto; display: inline-block;', 
-            'line-height: 1.5rem; color: #ce9178;', 
-            'line-height: 1.5rem; color: #9cdcfe;', 
-            'line-height: 1.5rem; color: initial;', 
-            'line-height: 1.5rem; display: inline-block;',
-            'line-height: 1.5rem; background: #333; padding: 0 0.8em; border-radius: 0.5em; vertical-align: middle;', 
-            'line-height: 1.5rem; background: initial; padding: initial;',
-            'line-height: initial; display: initial;'
-        );
+        const preElem = document.querySelector('body > pre');
+        const text = preElem.innerHTML;
+        preElem.remove();
 
-        exposeJson(text, false);
-        // console.log(`%c[%cJSONHighlighter%c]%c JSON stored in window.json, enjoy!`, 'color: #9cdcfe;', 'color: #ce9178;', 'color: #9cdcfe;', 'color: initial;');
-    }
-    catch(err)
-    {
-        console.error(err);
-    }
-
-    const frame = document.createElement('iframe');
-    frame.src = chrome.runtime.getURL('/editor/editor.html');
-    frame.style = 'border: 0px none; width: 100%; height: 100vh; display: block;';
-    document.body.append(frame);
-
-    window.addEventListener('message', e =>
-    {
-        if (e.data === 'loaded')
+        try
         {
-            e.source.postMessage({
-                name: 'json',
-                json: JSON.stringify(JSON.parse(text), null, 4)
-            }, chrome.runtime.getURL(''));
+            console.log(`%c{%c "JSON Highlighter" %c}%c
+    JSON is shown below!
+    %c
+    🖱️ right click the json
+    📄 copy object
+    ⌨️ type %cconst json =%c <PASTE_JSON_HERE>
+    🪠 paste the json
+    🎉 have fun messing with it!
+    %c`
+                , 
+                'line-height: 1.5rem; color: #9cdcfe; margin: 0 auto; display: inline-block;', 
+                'line-height: 1.5rem; color: #ce9178;', 
+                'line-height: 1.5rem; color: #9cdcfe;', 
+                'line-height: 1.5rem; color: initial;', 
+                'line-height: 1.5rem; display: inline-block;',
+                'line-height: 1.5rem; background: #333; padding: 0 0.8em; border-radius: 0.5em; vertical-align: middle;', 
+                'line-height: 1.5rem; background: initial; padding: initial;',
+                'line-height: initial; display: initial;'
+            );
+
+            exposeJson(text, false);
         }
-    });
+        catch(err)
+        {
+            console.error(err);
+        }
+
+        window.addEventListener('message', e =>
+        {
+            if (e.data === 'loaded')
+            {
+                e.source.postMessage({
+                    name: 'json',
+                    text: JSON.stringify(JSON.parse(text), null, 4)
+                }, chrome.runtime.getURL(''));
+            }
+        });
+    }
+    else
+    {
+        const elem = document.querySelector('body > pre') || document.querySelector("#webkit-xml-viewer-source-xml");
+        const text = elem.innerHTML;
+        
+        Array.from(document.querySelectorAll('body > :not(iframe), head > *')).forEach(elem => elem.remove());
+
+        window.addEventListener('message', e =>
+        {
+            if (e.data === 'loaded')
+            {
+                e.source.postMessage({
+                    name: 'other',
+                    text,
+                    mimeType: document.contentType
+                }, chrome.runtime.getURL(''));
+            }
+        });
+    }
 }
 
 function isValidJSON(str)
