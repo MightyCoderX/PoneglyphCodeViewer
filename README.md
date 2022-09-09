@@ -5,12 +5,10 @@
 
 <br>
 <br>
-<br>
 
 ## Install
 Install from [Chrome Web Store][web-store-link]
 
-<br>
 <br>
 
 ## Install Unpacked
