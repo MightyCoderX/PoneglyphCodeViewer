@@ -1,12 +1,17 @@
-<h1 align="center">Poneglyph Code Viewer</h1>
-<img src="icons/poneglyph-code-viewer-icon.svg" align="center">
+<p align="center"><img src="icons/poneglyph-code-viewer-icon.svg" width="128"></p>
+<h3 align="center">Poneglyph Code Viewer</h1>
 
-![screenshot](https://user-images.githubusercontent.com/36588044/158477465-7b96f8fd-9a4b-4190-8e71-35ea244821f3.png)
+<p align="center">Chrome extension which highlights JSON text using <a href="https://github.com/microsoft/monaco-editor">monaco-editor</a></p>
 
-Chrome extension which highlights JSON text using [monaco-editor](https://github.com/microsoft/monaco-editor)
+<br>
+<br>
+<br>
 
 ## Install
 Install from [Chrome Web Store][web-store-link]
+
+<br>
+<br>
 
 ## Install Unpacked
 1. Go to the `chrome://extensions` page
